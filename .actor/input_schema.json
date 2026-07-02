@@ -1,0 +1,36 @@
+{
+    "title": "India TradeIndia Seller Scraper Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "keyword": {
+            "title": "Keyword (Product/Industry)",
+            "type": "string",
+            "description": "The specific product or industry (e.g., 'surgical instruments', 'auto parts', 'chemicals').",
+            "editor": "textfield",
+            "prefill": "surgical instruments"
+        },
+        "location": {
+            "title": "Location (City)",
+            "type": "string",
+            "description": "The Indian City, or type 'India' for national results (e.g., 'Delhi', 'Mumbai', 'Pune').",
+            "editor": "textfield",
+            "prefill": "Delhi"
+        },
+        "maxLeads": {
+            "title": "Maximum Leads",
+            "type": "integer",
+            "description": "Maximum number of Indian TradeIndia seller leads to extract.",
+            "default": 100,
+            "minimum": 1
+        },
+        "proxyConfiguration": {
+            "title": "Proxy Configuration",
+            "type": "object",
+            "description": "Proxy settings. Apify Residential Proxy (India targeted) is highly required.",
+            "prefill": { "useApifyProxy": true },
+            "editor": "proxy"
+        }
+    },
+    "required": ["keyword", "location"]
+}
