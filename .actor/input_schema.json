@@ -3,19 +3,14 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "keyword": {
-            "title": "Keyword (Product/Industry)",
-            "type": "string",
-            "description": "The specific product or industry (e.g., 'surgical instruments', 'auto parts', 'chemicals').",
-            "editor": "textfield",
-            "prefill": "surgical instruments"
-        },
-        "location": {
-            "title": "Location (City)",
-            "type": "string",
-            "description": "The Indian City, or type 'India' for national results (e.g., 'Delhi', 'Mumbai', 'Pune').",
-            "editor": "textfield",
-            "prefill": "Delhi"
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "List of search URLs to scrape.",
+            "editor": "requestListSources",
+            "prefill": [
+                { "url": "https://www.tradeindia.com/search.html?keyword=surgical+instruments" }
+            ]
         },
         "maxLeads": {
             "title": "Maximum Leads",
@@ -32,5 +27,5 @@
             "editor": "proxy"
         }
     },
-    "required": ["keyword", "location"]
+    "required": ["startUrls"]
 }

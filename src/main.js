@@ -7,8 +7,7 @@ await Actor.init();
 try {
     const input = await Actor.getInput();
     const { 
-        keyword = 'surgical instruments', 
-        location = 'Delhi', 
+        startUrls = [],
         maxLeads = 100,
         proxyConfiguration 
     } = input || {};
@@ -19,7 +18,7 @@ try {
         apifyProxyCountry: 'IN'
     });
 
-    log.info(`Searching TradeIndia for sellers of "${keyword}" in "${location}"`);
+    log.info(`Searching TradeIndia for sellers...`);
     await Actor.charge({ eventName: 'apify-actor-start', count: 1 });
 
     let extractedCount = 0;
@@ -133,17 +132,14 @@ try {
         }
     });
 
-    const formatLocation = location.toLowerCase() === 'india' ? '' : location;
-    
-    // We construct the search URL.
-    let startUrl = `https://www.tradeindia.com/search.html?keyword=${encodeURIComponent(keyword)}`;
-    if (formatLocation) {
-        startUrl += `&city=${encodeURIComponent(formatLocation)}`;
+    if (startUrls && startUrls.length > 0) {
+        for (const req of startUrls) {
+            await crawler.addRequests([{ url: typeof req === 'string' ? req : req.url }]);
+        }
+    } else {
+        log.warning('No startUrls provided. Using default.');
+        await crawler.addRequests([{ url: 'https://www.tradeindia.com/search.html?keyword=surgical+instruments' }]);
     }
-    
-    await crawler.addRequests([{
-        url: startUrl
-    }]);
 
     armKillSwitch(crawler);
     await crawler.run();
